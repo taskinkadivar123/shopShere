@@ -1,0 +1,42 @@
+{% extends 'app/base.html' %}
+{% block main-content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #088178;">Your Order History</h2>
+
+    {% if orders %}
+        <div class="row justify-content-center">
+            {% for order in orders %}
+                <div class="col-12 col-sm-10 col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 p-3 h-100">
+                        <div class="text-center mb-3">
+                            <img src="{{ order.product.product_image.url }}" class="img-fluid rounded" alt="{{ order.product.name }}" style="height: 120px; object-fit: contain;">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ order.product.name }}</h5>
+                            <p class="mb-1"><strong>Order ID:</strong> {{ order.id }}</p>
+                            <p class="mb-1"><strong>Qty:</strong> {{ order.quantity }}</p>
+                            <p class="mb-1"><strong>Status:</strong> {{ order.status }}</p>
+
+                            {% if order.payment %}
+                                {% if order.payment.status == "Success" %}
+                                    <span class="badge bg-success">Paid (Online)</span>
+                                {% elif order.payment.status == "Pending" %}
+                                    <span class="badge bg-warning text-dark">Pending (COD)</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge bg-danger">No Payment Info</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-danger mt-4">You haven't placed any orders yet.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn px-4 py-2" style="background-color: #088178; color: white;">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}

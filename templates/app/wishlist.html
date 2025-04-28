@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <h2>Your Wishlist</h2>
+    <div class="row">
+        {% for item in wishlist_items %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="{{ item.product.product_image.url }}" class="card-img-top" alt="{{ item.product.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.product.title }}</h5>
+                        <p class="card-text">Rs.{{ item.product.discounted_price }}</p>
+                        <a href="{% url 'product-detail' item.product.id %}" 
+   style="display: inline-block; padding: 8px 16px; font-size: 14px; 
+          color: white; background-color: #088178; text-decoration: none; 
+          border-radius: 6px; transition: background-color 0.3s ease;"
+   onmouseover="this.style.backgroundColor='#066d62';"
+   onmouseout="this.style.backgroundColor='#088178';">
+   View
+</a>
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>You have no items in your wishlist.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

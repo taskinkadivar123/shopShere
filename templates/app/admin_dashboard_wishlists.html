@@ -1,0 +1,180 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+{% block title %}Wishlist Management{% endblock %}
+
+{% block wishlist %}
+<div class="wishlist-container">
+    <div class="wishlist-header">
+        <h1 class="wishlist-title">Wishlist</h1>
+        <form method="GET" class="search-form">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="Search by username or product" class="wishlist-search-input">
+            <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
+        </form>
+    </div>
+
+    {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="wishlist-table-container">
+        <table class="wishlist-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Product</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wishlist in wishlists %}
+                <tr>
+                    <td>{{ wishlist.user.username }}</td>
+                    <td>{{ wishlist.product.title }}</td>
+                    <td>
+                        <a href="?delete_wishlist={{ wishlist.id }}" class="btn-delete" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No wishlist items found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if wishlists.has_previous %}
+                <a href="?page=1" class="pagination-arrow">&laquo; First</a>
+                <a href="?page={{ wishlists.previous_page_number }}" class="pagination-arrow">Previous</a>
+            {% endif %}
+
+            <span class="page-numbers">
+                {% for num in wishlists.paginator.page_range %}
+                    {% if wishlists.number == num %}
+                        <span class="current-page">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            </span>
+
+            {% if wishlists.has_next %}
+                <a href="?page={{ wishlists.next_page_number }}" class="pagination-arrow">Next</a>
+                <a href="?page={{ wishlists.paginator.num_pages }}" class="pagination-arrow">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+<style>
+    /* Wishlist design */
+.wishlist-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.wishlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.wishlist-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.wishlist-table-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.wishlist-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wishlist-table thead {
+    background-color: #f9f9f9;
+}
+
+.wishlist-table th, .wishlist-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.wishlist-table th {
+    font-weight: bold;
+}
+
+.wishlist-search-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.page-link, .pagination-arrow {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #088178;
+    font-weight: bold;
+}
+
+.page-link:hover, .pagination-arrow:hover {
+    background-color: #f0f0f0;
+}
+
+.current-page {
+    background-color: #088178;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.pagination-arrow {
+    font-weight: normal;
+}
+
+/* Delete Button */
+.btn-delete {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #dc3545; /* Red background for delete */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Optional: Adding a border to distinguish buttons */
+.btn-delete {
+    border: none;
+}
+
+</style>
+{% endblock %}

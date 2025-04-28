@@ -1,0 +1,194 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+{% block title %}Add Products{% endblock %}
+
+{% block add_products %}
+<div class="edit-product-container">
+    <nav class="breadcrumb">
+        <a href="{% url 'dashboard_products' %}">Products</a> &gt;
+        <span>Edit: {{ product.title }}</span>
+    </nav>
+
+    <p class="edit-product-title">Add Product: {{ product.title }}
+    <a href="{% url 'dashboard_products' %}" class="back-link">Back to Products List</a></p>
+
+    <div class="edit-product-content">
+        <form method="POST" enctype="multipart/form-data" class="edit-product-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                <!-- Left Side: Editable Information -->
+                <div class="form-left">
+                    <div class="form-group">
+                        <label for="title" class="form-label">Title <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" value="{{ form.title.value }}" required class="form-input" placeholder="Enter product title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selling_price" class="form-label">Discounted Price <span class="required">*</span></label>
+                        <input type="number" id="selling_price" name="selling_price" value="{{ form.selling_price.value }}" required class="form-input" placeholder="Enter selling price">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discounted_price" class="form-label">Selling Price </label>
+                        <input type="number" id="discounted_price" name="discounted_price" value="{{ form.discounted_price.value }}" class="form-input" placeholder="Enter discounted price">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="description" class="form-input" placeholder="Enter product description">{{ form.description.value }}</textarea>
+                    </div>
+
+                   
+
+                    
+                </div>
+
+                <!-- Right Side: Additional Information (Category, Image, etc.) -->
+                <div class="form-right">
+                    <div class="form-group">
+                        <label for="composition" class="form-label">Composition</label>
+                        <textarea id="composition" name="composition" class="form-input" placeholder="Enter product composition">{{ form.composition.value }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prodapp" class="form-label">Product App</label>
+                        <input type="text" id="prodapp" name="prodapp" value="{{ form.prodapp.value }}" class="form-input" placeholder="Enter product app info">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="form-label">Category</label>
+                        {{ form.category }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product_image" class="form-label">Product Image</label>
+                        <input type="file" id="product_image" name="product_image" class="form-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button Section -->
+            <div class="form-action">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+       
+    </div>
+</div>
+
+<style>
+    /* Basic Layout for Edit Product Page */
+
+    .edit-product-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .breadcrumb {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .breadcrumb a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+    .edit-product-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .edit-product-content {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-left, .form-right {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 500px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus {
+        border-color: #0066cc;
+        outline: none;
+    }
+
+    .form-action {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #088178;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #076f68;
+    }
+
+    .back-link {
+        padding: 10px 20px;
+        background-color: #088178;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 650px;
+        text-decoration: none;
+    }
+
+    .required {
+        color: red;
+    }
+
+    #composition{
+        height: 120px;
+    }
+
+    #description{
+        height: 110px;
+    }
+</style>
+{% endblock add_products %}

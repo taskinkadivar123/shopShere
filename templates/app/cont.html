@@ -1,0 +1,76 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}About{% endblock title %}
+
+  
+
+{% block main-content %}
+<section id="page-header" class="about-header">
+            
+    <h2>#Let's_talk</h2>
+    <p>LEAVE A MESSAGE, We love to hear from you!</p>
+</section>
+
+<!--contact-->
+<section id="contact-details" class="section-p1">
+   <div class="details">
+       <span>GET IN TOUCH</span>
+       <h2>Visit one of our agency or contact us today</h2>
+       <h3>Head Office</h3>
+       <div>
+           <li>
+               <i class="fa-regular fa-map"></i>
+                <p>56 Glassford Street Glassgow G1 1UL New Youk</p>
+           </li>
+           <li>
+               <i class="fa-regular fa-envelope"></i>
+                <p>contact@example.com</p>
+           </li>
+           <li>
+               <i class="fa-solid fa-phone"></i>
+               <p>contact@example.com</p>
+           </li>
+           <li>
+               <i class="fa-regular fa-clock"></i>
+                <p>Monday to Saturday:9.00am to 16.00pm</p>
+           </li>
+       </div>
+   </div>
+   <div class="map">
+       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235013.74842261767!2d72.41492452338058!3d23.020474105204602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690370818680!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+   </div>
+</section>
+
+<!--form-->
+<section id="form-details">
+   <form action="">
+        <span>LEAVE A MESSAGE</span>
+        <h2>We love to hear from you</h2>
+        <input type="text" placeholder="Your Name">
+        <input type="text" placeholder="E-mail">
+        <input type="text" placeholder="Subject">
+        <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+        <button class="normal">Submit</button>
+   </form>
+   <div class="people">
+         <div>
+            <img src="/static/app/images/contact/c5.webp" alt="">
+            <p><span>Taskin Kadivar </span>Marketing Manager<br>
+            Phone: +91 926 542 7192<br>
+            E-mail: taskinkadivar@gmail.com</p>
+         </div>
+         <div>
+           <img src="/static/app/images/contact/c2.webp" alt="">
+           <p><span>Dorami Lohani </span>Marketing Manager<br>
+           Phone: +91 123 456 6789<br>
+           E-mail: doramilohani@gmail.com</p>
+        </div>
+        <div>
+           <img src="/static/app/images/contact/c3.jpg" alt="">
+           <p><span>Sinchan Patel </span>Marketing Manager<br>
+           Phone: +91 987 654 3211<br>
+           E-mail: sinchanpatel@gmail.com</p>
+        </div>
+   </div>
+</section>
+{% endblock main-content %}

@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% block title %}Payment Confirmation{% endblock %}
+
+{% block main-content %}
+<div class="container">
+    <h2>Payment Details</h2>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <h5>Order ID: {{ order.id }}</h5>
+            <p>Total Amount: Rs. {{ payment.amount_paid }} (including shipping)</p>
+            <p>Payment Status: {{ payment.payment_status }}</p>
+            <p>Payment Date: {{ payment.payment_date }}</p>
+        </div>
+    </div>
+    
+    <!-- <form method="POST">
+        {% csrf_token %}
+        <div class="form-group mt-3">
+            <label for="payment_status">Update Payment Status:</label>
+            <select name="payment_status" class="form-control">
+                <option value="Pending" {% if payment.payment_status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Success" {% if payment.payment_status == 'Success' %}selected{% endif %}>Success</option>
+                <option value="Failed" {% if payment.payment_status == 'Failed' %}selected{% endif %}>Failed</option>
+            </select>
+        </div>
+
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-success">Update Payment Status</button>
+        </div>
+    </form> -->
+    <form method="POST" {% if payment.payment_status != 'Pending' %}disabled{% endif %}>
+        {% csrf_token %}
+        <div class="form-group mt-3">
+            <label for="payment_status">Update Payment Status:</label>
+            <select name="payment_status" class="form-control">
+                <option value="Pending" {% if payment.payment_status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Success" {% if payment.payment_status == 'Success' %}selected{% endif %}>Success</option>
+                <option value="Failed" {% if payment.payment_status == 'Failed' %}selected{% endif %}>Failed</option>
+            </select>
+        </div>
+    
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-success">Update Payment Status</button>
+        </div>
+    </form>
+    
+</div>
+{% endblock %}

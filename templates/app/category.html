@@ -1,0 +1,190 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Category{% endblock title %}
+
+{% block head %}
+    <style>
+        /* General Container and Spacing */
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .my-5 {
+            margin-top: 3rem !important;
+            margin-bottom: 3rem !important;
+        }
+
+        /* Flexbox Layout for the sections */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;  /* Reduced space between columns */
+        }
+
+        .left{
+            position: absolute;
+            left: auto;
+        }
+
+        /* Left Column (Category List) */
+       
+        .col-sm-3 {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-group {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .list-group-item {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .list-group-item-action {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Right Column (Products) */
+        .col-sm-9 {
+            position: absolute;
+            left: 150px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 10px;  /* Reduced space between product cards */
+        }
+
+        /* Individual Product Card */
+        .pro {
+            width: calc(50% - 10px);  /* 2 products per row with a small gap */
+            min-width: 250px;
+            padding: 15px;
+            border: 1px solid #cce7d0;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+            position: relative;
+            margin-bottom: 20px; /* Added bottom margin for space */
+        }
+
+        /* Hover effect for the product card */
+        .pro:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);  /* More intense shadow on hover */
+            border: 2px solid #333;
+        }
+
+        .pro img {
+            width: 100%;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for images */
+        .pro:hover img {
+            transform: scale(1.05);  /* Zoom-in effect on hover */
+        }
+
+        /* Product Description */
+        .pro .des {
+            text-align: start;
+            padding-top: 10px;
+        }
+
+        .pro .des span {
+            color: #606063;
+            font-size: 12px;
+        }
+
+        .pro .des h5 {
+            padding-top: 7px;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        .pro .des h4 {
+            padding-top: 7px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #088178;
+        }
+
+        /* Add to Cart Icon */
+        .shopicon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 20px;
+            color: #aaa;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pro:hover .shopicon {
+            color: #28a745;
+        }
+
+      
+    </style>
+{% endblock head %}
+
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <!-- Left Column: Category List -->
+            <section class="left">
+                <div class="col-sm-3">
+                    <div class="list-group" >
+                        {% for val in title %}
+                            <a href="{% url 'category-title' val.title %}" class="list-group-item list-group-item-action" aria-current="true">{{ val.title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Products -->
+            <section id="product1" class="section-p1">
+                <div class="pro-container">
+                    {% for prod in product %}
+                        <div class="pro">
+                            <a href="{% url 'product-detail' prod.id %}" class="btn">
+                                <img src="{{ prod.product_image.url }}" alt="{{ prod.title }}">
+                                <div class="des">
+                                   
+                                    <h5>{{ prod.title }}</h5>
+                                    
+                                    <h4>Rs.{{ prod.discounted_price }}/-
+                                        <small class="fw-light text-decoration-line-through">{{ prod.selling_price }}</small>
+                                    </h4>
+                                </div>
+                                <div class="shopicon">
+                                    <i class="fa-solid fa-cart-shopping" style="color: #b0b0b0;"></i>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock main-content %}

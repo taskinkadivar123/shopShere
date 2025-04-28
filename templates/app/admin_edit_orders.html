@@ -1,0 +1,157 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+{% block title %}Edit Order{% endblock %}
+
+{% block edit_order %}
+<div class="edit-product-container">
+    <nav class="breadcrumb">
+        <a href="{% url 'dashboard_orders' %}">Orders</a> &gt;
+        <span>Edit Order #{{ order.id }}</span>
+    </nav>
+
+    <p class="edit-product-title">Edit Order #{{ order.id }}
+        <a href="{% url 'dashboard_orders' %}" class="back-link">Back to Order List</a>
+    </p>
+
+    <div class="edit-product-content">
+        <form method="POST" class="edit-product-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                <!-- Left Column -->
+                <div class="form-left">
+                    <div class="form-group">
+                        <label class="form-label">Order ID</label>
+                        <input type="text" value="{{ order.id }}" readonly class="form-input" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Product</label>
+                        {{ form.product }}
+                    </div>
+
+                    
+                </div>
+
+                <!-- Right Column -->
+                <div class="form-right">
+                    <div class="form-group">
+                        <label class="form-label">Quantity</label>
+                        {{ form.quantity }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Order Status</label>
+                        {{ form.status }}
+                    </div>
+
+                    
+                </div>
+            </div>
+
+            <div class="form-action">
+                <button type="submit" class="btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .edit-product-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .breadcrumb {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .breadcrumb a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+    .edit-product-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .edit-product-content {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-left, .form-right {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 500px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-input, select, textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus, select:focus, textarea:focus {
+        border-color: #0066cc;
+        outline: none;
+    }
+
+    .form-action {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #088178;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #076f68;
+    }
+
+    .back-link {
+        padding: 10px 20px;
+        background-color: #088178;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        float: right;
+        margin-top: -5px;
+    }
+</style>
+{% endblock edit_order %}

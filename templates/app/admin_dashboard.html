@@ -1,0 +1,114 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block graph-chart %}
+<section class="summary">
+    <!-- Filters -->
+    <div class="filters">
+        <form method="get" action="">
+            <label>Start date:
+                <input type="date" name="start_date" value="{{ request.GET.start_date }}">
+            </label>
+            <label>End date:
+                <input type="date" name="end_date" value="{{ request.GET.end_date }}">
+            </label>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+        <div class="card">
+            <h3>Revenue</h3>
+            <p>Rs.{{ revenue }}</p>
+            <span class="growth positive"><i class="fas fa-arrow-up"></i> Rs.{{ revenue }}</span>
+        </div>
+
+        <div class="card">
+            <h3>New Customers</h3>
+            <p>{{ new_customers }}</p>
+            <span class="growth positive"><i class="fas fa-user-plus"></i> {{ new_customers }}</span>
+        </div>
+
+        <div class="card">
+            <h3>New Orders</h3>
+            <p>{{ new_orders }}</p>
+            <span class="growth positive"><i class="fas fa-shopping-cart"></i> {{ new_orders }}</span>
+        </div>
+    </div>
+
+<!-- Latest Entries -->
+<div class="latest-entries" style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+
+    <!-- Latest Users -->
+    <div class="latest-users" style="flex: 1; min-width: 300px;">
+        <h3 style="margin-bottom: 8px;">Latest 5 Users</h3>
+        <table style="width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.1);">
+            <thead style="background-color: #f8f8f8;">
+                <tr>
+                    <th style="padding: 8px; text-align: left;">Username</th>
+                    <th style="padding: 8px; text-align: left;">Joined Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in latest_users %}
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ user.username }}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ user.date_joined|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2" style="padding: 8px; text-align: center;">No users found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Latest Orders -->
+    <div class="latest-orders" style="flex: 1; min-width: 300px;">
+        <h3 style="margin-bottom: 8px;">Latest 5 Orders</h3>
+        <table style="width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.1);">
+            <thead style="background-color: #f8f8f8;">
+                <tr>
+                    <th style="padding: 8px; text-align: left;">Order ID</th>
+                    <th style="padding: 8px; text-align: left;">Date</th>
+                    <th style="padding: 8px; text-align: left;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in latest_orders %}
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">#{{ order.id }}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ order.ordered_date|date:"Y-m-d H:i" }}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ order.status }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" style="padding: 8px; text-align: center;">No orders found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="extra-summary" style="margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap;">
+    <div class="card" style="flex: 1; min-width: 200px; background: #fff; padding: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); border-radius: 8px;">
+        <h4>Total Customers</h4>
+        <p style="font-size: 24px; margin-top: 10px;">{{ total_customers }}</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 200px; background: #fff; padding: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); border-radius: 8px;">
+        <h4>Total Products</h4>
+        <p style="font-size: 24px; margin-top: 10px;">{{ total_products }}</p>
+    </div>
+    <div class="card" style="flex: 1; min-width: 200px; background: #fff; padding: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); border-radius: 8px;">
+        <h4>Pending Orders</h4>
+        <p style="font-size: 24px; margin-top: 10px;">{{ pending_orders }}</p>
+    </div>
+</div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <div class="row d-flex align-items-center justify-content-center">
+        <!-- Product Image Section (Left Side) -->
+        <div class="col-lg-5 text-center mb-4">
+            <div class="card shadow-lg border-0 p-3" style="border-radius: 15px; overflow: hidden;">
+                <img src="{{ product.product_image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.title }}" style="width: 100%; height: auto; object-fit: cover;">
+            </div>
+        </div>
+        
+        <!-- Product Details Section (Right Side) -->
+        <div class="col-lg-6">
+            <div class="card border-0 p-4 shadow-lg" style="border-radius: 15px; background: #ffffff;">
+                <div class="card-body">
+                    <h1 class="fw-bold text-dark" style="font-size: 45px;">{{ product.title }}</h1>
+                    <h4 class="text-success fw-bold">Rs. {{ product.discounted_price }}/-</h4>
+                    <p class="text-danger text-decoration-line-through fs-5">Rs. {{ product.selling_price }}/-</p>
+                    
+                    <h5 class="mt-3 text-primary">Product Features:</h5>
+                    <p class="text-secondary fs-5">{{ product.description }}</p>
+                    
+                    <!-- Buttons -->
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a pid="{{ product.id }}" class="add-to-cart btn btn-lg btn-primary shadow px-5 py-2"><i class="fas fa-shopping-cart fa-lg"></i> Add to Cart</a>
+                        <a href="{% url 'showcart' %}" class="btn btn-lg btn-warning px-5 py-2 shadow">⚡ Buy Now</a>
+                    </div>
+                    
+                    <!-- Wishlist -->
+                    <div class="mt-4">
+                        {% if wishlist %}
+                            <a pid="{{ product.id }}" class="minus-wishlist btn btn-danger shadow px-4 py-2"><i class="fas fa-heart fa-lg"></i> Remove from Wishlist</a>
+                        {% else %}
+                            <a pid="{{ product.id }}" class="plus-wishlist btn btn-success shadow px-4 py-2"><i class="fas fa-heart fa-lg"></i> Add to Wishlist</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

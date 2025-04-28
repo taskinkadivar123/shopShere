@@ -1,0 +1,119 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Contact{% endblock title %}
+
+  
+
+{% block main-content %}
+<section id="page-header" class="about-header">
+            
+    <h2>#Let's_talk</h2>
+    <p>LEAVE A MESSAGE, We love to hear from you!</p>
+</section>
+
+<!--contact-->
+<section id="contact-details" class="section-p1">
+   <div class="details">
+       <span>GET IN TOUCH</span>
+       <h2>Visit one of our agency or contact us today</h2>
+       <h3>Head Office</h3>
+       <div>
+           <li>
+               <i class="fa-regular fa-map"></i>
+                <p>A6,Arsad Park,Amber Tower,Ahamdabad</p>
+           </li>
+           <li>
+               <i class="fa-regular fa-envelope"></i>
+                <p>taskinkadivar524@gmail.com</p>
+           </li>
+           <li>
+               <i class="fa-solid fa-phone"></i>
+               <p>tasukadivar2005@gmail.com</p>
+           </li>
+           <li>
+               <i class="fa-regular fa-clock"></i>
+                <p>Monday to Saturday:9.00am to 16.00pm</p>
+           </li>
+       </div>
+   </div>
+   <div class="map">
+       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235013.74842261767!2d72.41492452338058!3d23.020474105204602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690370818680!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+   </div>
+</section>
+
+<!--form-->
+<section id="form-details">
+    <form method="POST" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <span>LEAVE A MESSAGE</span>
+        <h2>We love to hear from you</h2>
+
+        {% if messages %}
+        <div style="background-color: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+        
+        <!-- Name Field -->
+        <label for="{{ form.name.id_for_label }}" style="width: 100%;   
+        max-width: 800px; 
+        padding: 3px;   
+        box-sizing: border-box;">
+            {{ form.name }} <!-- Django automatically handles the name, value, and other attributes -->
+        </label>
+        
+        <!-- Email Field -->
+        <label for="{{ form.email.id_for_label }}" style="width: 100%;   
+        max-width: 800px; 
+        padding: 3px;  
+        box-sizing: border-box;">
+            {{ form.email }} <!-- Django automatically handles the name, value, and other attributes -->
+        </label>
+        
+        <!-- Subject Field -->
+        <label for="{{ form.subject.id_for_label }}" style="width: 100%;   
+        max-width: 800px; 
+        padding: 3px;  
+        box-sizing: border-box;">
+            {{ form.subject }} <!-- Django automatically handles the name, value, and other attributes -->
+        </label>
+        
+        <!-- Message Field -->
+        <label for="{{ form.message.id_for_label }}"style="width: 100%;   
+        max-width: 800px; 
+        padding: 3px;   
+        box-sizing: border-box;">
+            {{ form.message }} <!-- Django automatically handles the name, value, and other attributes -->
+        </label>
+        
+        <button type="submit" class="normal">Submit</button><br>
+       
+    </form>
+   <div class="people">
+         <div>
+            <img src="/static/app/images/contact/c5.webp" alt="">
+            <p><span>Taskin Kadivar </span>Software Engineer<br>
+            Phone: +91 926 542 7192<br>
+            E-mail: taskinkadivar@gmail.com</p>
+         </div>
+         <div>
+           <img src="/static/app/images/contact/c2.webp" alt="">
+           <p><span>Dorami Lohani </span>Marketing Manager<br>
+           Phone: +91 123 456 6789<br>
+           E-mail: doramilohani@gmail.com</p>
+        </div>
+        <div>
+           <img src="/static/app/images/contact/c3.jpg" alt="">
+           <p><span>Sinchan Patel </span>Marketing Manager<br>
+           Phone: +91 987 654 3211<br>
+           E-mail: sinchanpatel@gmail.com</p>
+        </div>
+   </div>
+</section>
+{% endblock main-content %}

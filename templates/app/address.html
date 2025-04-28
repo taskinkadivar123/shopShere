@@ -1,0 +1,57 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Address{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <h3>Welcome <span class="text-capitalize">{{request.user}}</span></h3>
+    
+
+    <div class="col-sm-2 border-end">
+        <ul class="list-unstyled">
+            <li class="d-grid"><a href="{% url 'profile' %}" class="btn">Profile</a></li>
+            <li class="d-grid"><a href="{% url 'address' %}" class="btn btn-primary">Address</a></li>
+        </ul>
+    </div>
+
+    <div class="col-sm-8 offset-sm-1">
+        <div class="row">
+            {% for ad in add %}
+            <div class="col-md-6 mb-4">
+                <div class="card border-teal shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-teal">Address {{ forloop.counter }}</h5>
+                        <p><strong>Name:</strong> {{ ad.name }}</p>
+                        <p><strong>Locality:</strong> {{ ad.locality }}</p>
+                        <p><strong>Mobile:</strong> {{ ad.mobile }}</p>
+                        <p><strong>City:</strong> {{ ad.city }}</p>
+                        <p><strong>State:</strong> {{ ad.state }}</p>
+                        <p><strong>Pincode:</strong> {{ ad.zipcode }}</p>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'updateAddress' pk=ad.id %}" class="btn btn-teal">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <style>
+        .btn-teal {
+            background-color: #008080;
+            color: #fff;
+        }
+        .btn-teal:hover {
+            background-color: #006666;
+            color: #fff;
+        }
+        .text-teal {
+            color: #008080;
+        }
+        .border-teal {
+            border: 1px solid #008080;
+        }
+    </style>
+{% endblock main-content %} 
+

@@ -1,0 +1,88 @@
+/* General Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #3f72af;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #fff !important;
+    font-weight: 500;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #ffb84d !important;
+}
+
+.navbar .navbar-brand img {
+    border-radius: 50%;
+}
+
+.navbar-toggler-icon {
+    background-color: #ffb84d;
+}
+
+/* Footer */
+footer {
+    background-color: #2a2a2a;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+.social-icons i {
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.social-icons i:hover {
+    transform: scale(1.1);
+}
+
+/* Button Hover Effects */
+button, .btn {
+    border-radius: 30px;
+}
+
+button:hover, .btn:hover {
+    background-color: #ffb84d;
+    color: #fff;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* Input Search Box */
+input[type="search"] {
+    border-radius: 25px;
+}
+
+/* Product Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover Effects for Links */
+a:hover {
+    color: #ffb84d;
+    text-decoration: underline;
+}
+
+/* Header & Main Title */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: #2a2a2a;
+}

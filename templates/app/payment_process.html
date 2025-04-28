@@ -1,0 +1,73 @@
+{% extends 'app/base.html' %}
+{% block main-content %}
+
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ msg }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+  <div class="card shadow-lg p-4 w-100" style="max-width: 600px; border-radius: 15px;">
+    <h3 class="text-center mb-4" style="color: #088178;">Secure Payment</h3>
+
+    <!-- Order Details Section -->
+    <div class="mb-4">
+      <h5 class="text-muted">Order Summary:</h5>
+      <ul class="list-group mb-3">
+        {% for order in orders %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ order.product.title }}</strong> (Qty: {{ order.quantity }})
+            </div>
+            <span>₹{{ order.total_cost }}</span>
+          </li>
+        {% endfor %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Delivery Charges</strong>
+          <span>₹40</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Total</strong>
+          <span>₹{{ total }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Payment Form -->
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Card Number</label>
+        <input type="text" name="cardNumber" maxlength="16" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Expiry Month</label>
+          <input type="text" name="expityMonth" maxlength="2" class="form-control" placeholder="MM" required>
+        </div>
+        <div class="col">
+          <label class="form-label">Expiry Year</label>
+          <input type="text" name="expityYear" maxlength="2" class="form-control" placeholder="YY" required>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">CVV</label>
+        <input type="text" name="cvCode" maxlength="3" class="form-control" placeholder="XXX" required>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn text-white fw-bold px-5 py-2" style="background-color: #088178;">
+          Pay ₹{{ total }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+{% block title %}User Management{% endblock %}
+
+{% block product_details %}
+<div class="customer-container" style="margin-top: 5px;">
+
+    <div class="customer-header" style="margin-top: 0px;">
+        <h1 class="customer-title">Products</h1>
+        <div class="actions" style="margin-top: 0px;">
+            <!-- Add Product Button -->
+            <a href="{% url 'add_product' %}" class="customer-new-btn" style="margin-top: 0px;">Add Product</a>
+            
+            <!-- Search Form -->
+            <form method="GET" class="search-form" style="margin-top:17px;">
+                <input type="text" name="q" value="{{ search_query }}" placeholder="Search by product title or category" class="wishlist-search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="customer-table-container">
+        <table class="customer-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in page_obj %}
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.selling_price }}</td>
+                    <td>{{ product.get_category_display }}</td>
+                    <td class="actions">
+                        <a href="{% url 'edit_product' product.id %}" class="customer-edit-btn">Edit</a>
+                        <a href="{% url 'delete_product' product.id %}" class="btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No products available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="pagination-arrow">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-arrow">Previous</a>
+            {% endif %}
+
+            <span class="page-numbers">
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <span class="current-page">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-arrow">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-arrow">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+<style>
+    /* Ensure everything is in one row with proper spacing */
+    .customer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Adds spacing between the button and the search bar */
+    }
+
+    /* Add Product Button */
+    .customer-new-btn {
+        background-color: #088178;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .customer-new-btn:hover {
+        background-color: #076e64;
+    }
+
+    /* Search Form */
+    .search-form {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Search Input */
+    .wishlist-search-input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 250px; /* Adjust the width to control the size */
+        margin-right: 10px;
+    }
+
+    /* Search Button */
+    .search-btn {
+        background-color: #088178;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-btn:hover {
+        background-color: #076e64;
+    }
+</style>
+
+{% endblock product_details %}

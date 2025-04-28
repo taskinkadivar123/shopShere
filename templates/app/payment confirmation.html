@@ -1,0 +1,35 @@
+{% extends 'app/base.html' %}
+{% block title %}Payment Pages{% endblock %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="text-center text-success">Payment Confirmation</h2>
+        <hr>
+        <p class="text-center">Your payment has been processed successfully.</p>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h5>Order Details</h5>
+                <p><strong>Order ID:</strong> {{ order.id }}</p>
+                <div class="col-md-4">
+                    <img src="{{ order.product.product_image.url }}" class="img-fluid rounded-start" alt="{{ order.product.name }}">
+                </div><br>
+                <p><strong>Order Status:</strong> {{ order.status }}</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Payment Details</h5>
+                <p><strong>Payment Status:</strong> {{ order.payment.status }}</p>
+                <p><strong>Amount Paid:</strong> Rs. {{ order.payment.amount }}</p>
+                <p><strong>Payment Method:</strong> {{ order.payment.method }}</p>
+            </div>
+        </div>
+        <!-- <div class="text-center mt-4">
+            <a href="{% url 'order_confirmation' order.id %}" class="btn btn-primary">Go to Order Confirmation</a>
+        </div> -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'order_history' %}">Order History</a>
+        </li>
+        
+    </div>
+</div>
+{% endblock %}

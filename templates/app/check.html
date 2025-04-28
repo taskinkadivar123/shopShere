@@ -1,0 +1,139 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Category{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h4>Order Summary</h4>
+            <hr>
+            {% for item in cart_items %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5>Product: {{ item.product.title }}</h5>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p class="fw-bold">Price: {{ item.product.discounted_price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <p class="fw-bold">Total Cost + Rs. 40 = {{ totalamount }}</p>
+            <small>Term and Condition: By using this service, you agree to our terms and conditions, which include compliance with all applicable laws and regulations. Please read them carefully to understand your rights and responsibilities.</small><br/><br/><br/>
+        </div>
+
+        <div class="col-sm-4 offset-sm-1">
+            <h4>Select Shipping Address</h4>
+            <hr>
+            <form method="post" id="myform">
+                {% csrf_token %}
+                {% for ad in add %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ ad.name }}</h5>
+                            <p>Mobile: {{ ad.mobile }}</p>
+                            <p>{{ ad.locality }} {{ ad.city }} {{ ad.state }} - {{ ad.zipcode }}</p>
+                        </div>
+                    </div>
+                    <div class="form-check mt-2 mb-5">
+                        <input class="form-check-input" type="radio" name="custid" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
+                        <label class="form-check-label fw-bold" for="custadd{{ forloop.counter }}">
+                            Address:{{ forloop.counter }}
+                        </label>      
+                    </div>
+                {% endfor %}
+                <div class="form-check mb-3">
+                    <label for="totalamount" class="form-label">Total Amount</label>
+                    <input type="number" class="form-control" name="totalamount" value={{ totalamount }} readonly>
+                </div>
+                <div class="text-end">
+                    <button type="button" class="btn btn-warning mt-3 px-5 fw-bold" id="payment-btn">Payment</button>
+                </div> 
+                <br><br><br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
+
+<script>
+   document.getElementById("payment-btn").addEventListener("click", function() {
+    // Get selected address ID
+    var selectedAddressId = document.querySelector('input[name="custid"]:checked');
+
+    // Check if an address is selected
+    if (!selectedAddressId) {
+        alert("Please select an address!");
+        return;
+    }
+
+    // Get the total amount from the form
+    var totalAmount = document.querySelector('input[name="totalamount"]').value;
+
+    // Set the hidden form inputs with selected address ID and total amount
+    document.querySelector('input[name="custid"]').value = selectedAddressId.value;
+    document.querySelector('input[name="totalamount"]').value = totalAmount;
+
+    // Submit the form
+    document.getElementById('myform').submit();
+});
+
+</script>
+
+
+
+
+
+
+{% extends 'app/base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h1 class="text-center">Checkout</h1>
+
+    {% if cart_items %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Order Summary</h3>
+                    <ul>
+                        {% for item in cart_items %}
+                            <li>
+                                {{ item.product.title }} x {{ item.quantity }} = Rs. {{ item.total_cost }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <h4>Total Amount: Rs. {{ totalamount }}</h4>
+                </div>
+                <div class="col-md-4">
+                    <h3>Select Shipping Address</h3>
+                    <div>
+                        {% if addresses %}
+                            {% for address in addresses %}
+                                <input type="radio" name="address_id" value="{{ address.id }}"> 
+                                {{ address.name }}, {{ address.locality }}, {{ address.city }}<br>
+                            {% endfor %}
+                        {% else %}
+                            <p>No shipping addresses found. Please add an address to proceed.</p>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <p>Your cart is empty. Please add products to your cart before proceeding.</p>
+    {% endif %}
+</div>
+{% endblock main-content %}
+

@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; font-size: 24px; margin-bottom: 20px; }
+        .section { margin-bottom: 15px; }
+        .bold { font-weight: bold; }
+        .order-box { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Payment Receipt
+    </div>
+    
+    <div class="section">
+        <span class="bold">Payment Status:</span> {{ payment.status }}<br>
+        <span class="bold">Payment Method:</span> {{ payment.method }}<br>
+        <span class="bold">Payment Date:</span> {{ payment.date }}
+    </div>
+
+    <div class="section">
+        <span class="bold">Order(s):</span><br>
+        {% for order in orders %}
+            <div class="order-box">
+                Order ID: {{ order.id }}<br>
+                Product: {{ order.product.title }}<br>
+                Quantity: {{ order.quantity }}<br>
+                Price (each): Rs. {{ order.product.discounted_price }}<br>
+                Total: Rs. {{ order.total_cost }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <span class="bold">Subtotal:</span> Rs. {{ subtotal }}<br>
+        <span class="bold">Shipping:</span> Rs. {{ shipping }}<br>
+        <span class="bold">Total Paid:</span> Rs. {{ total }}
+    </div>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            border-right: 1px solid #eaeaea;
+            padding: 20px;
+            height: 700;
+           
+           
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: flex;
+    align-items: center; /* Ensures the icon and text are vertically aligned */
+    gap: 10px; /* Increased gap between icon and text */
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+
+.menu a:hover {
+    background-color: #f4f4f4; /* Light gray background on hover */
+    color: #088178; /* Text color changes to a teal shade on hover */
+    padding-left: 30px; /* Adds a left padding effect for a sliding effect */
+}
+
+.menu a.active {
+    color: #088178; /* Text color for the active menu item */
+    font-weight: bold; /* Makes the active item bold */
+    background-color: #e1f7f1; /* Light greenish background for active item */
+}
+
+.menu a i {
+    font-size: 20px; /* Icon size */
+}
+        .badge {
+            background-color: #088178;
+            color: #fff;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header input {
+            padding: 10px;
+            border: 1px solid #eaeaea;
+            border-radius: 5px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-icon {
+            /* margin-left: 20px;
+            background-color: #088178;
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 14px; */
+            margin-left: 20px;
+    background-color: #088178;  /* Circle background color */
+    color: #fff;  /* Text color */
+    padding: 10px;
+    border-radius: 50%;  /* Makes the circle */
+    font-size: 18px;  /* Font size for initials */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 10px;
+        }
+
+        .summary {
+            padding: 20px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1;
+            background-color: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .growth {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+
+        .charts {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart {
+            flex: 1;
+            background-color: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .menu a i {
+            margin-right: 15px;
+        }
+
+        .user-actions i {
+            font-size: 20px;
+            margin-right: 20px;
+            color: #555;
+        }
+
+        .growth i {
+            margin-right: 5px;
+        }
+
+        /* User design */
+
+        .customer-container {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .customer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .customer-title {
+      font-size: 24px;
+      margin: 0;
+    }
+    .customer-new-btn {
+      background-color: #088178;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .customer-new-btn:hover {
+      background-color: #088178;
+    }
+    .customer-table-container {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .customer-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .customer-table thead {
+      background-color: #f9f9f9;
+    }
+    .customer-table th, .customer-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .customer-table th {
+      font-weight: bold;
+    }
+    .customer-table td input[type="checkbox"] {
+      margin: 0;
+    }
+    .customer-search-bar {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .customer-search-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .customer-filter-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    /* Container for Edit and Delete buttons */
+td {
+    text-align: center;
+    padding: 10px;
+}
+
+/* Edit Button */
+.customer-edit-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff; /* Blue background for edit */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.customer-edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Delete Button */
+.btn-delete {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #dc3545; /* Red background for delete */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Optional: Adding a border to distinguish buttons */
+.customer-edit-btn, .btn-delete {
+    border: none;
+}
+
+
+    /* edit user */
+    .edit-user-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-save {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.alert-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.step-links {
+    display: flex;
+    gap: 10px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.page-link, .pagination-arrow {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #088178;
+    font-weight: bold;
+}
+
+.page-link:hover, .pagination-arrow:hover {
+    background-color: #f0f0f0;
+}
+
+.current-page {
+    background-color: #088178;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.pagination-arrow {
+    font-weight: normal;
+}
+
+.user-actions {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 10px;
+        }
+
+        .user-actions i {
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .user-icon {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: black;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 200px;
+        }
+
+        .dropdown.active {
+            display: block;
+        }
+
+        .dropdown div {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown div:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown i {
+            margin-right: 10px;
+        }
+
+        .dropdown .user-name {
+            font-weight: bold;
+        }
+
+        .day-mode {
+            color: #1a1a17;
+        }
+
+        .night-mode {
+            color: #1a1a17;
+        }
+
+        .pc-mode {
+            color: #1a1a17;
+        }
+
+        .logout {
+            color: #ff4b4b;
+        }
+
+        .search-form {
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.search-btn {
+    padding: 8px 12px;
+    background-color: #088178;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #076f68;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    {% load static %}
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" style="height: 720px;">
+            <a href="/" class="navbar-brand">
+                <img src="{% static 'app/images/logo.png' %}" width="150" height="90" alt="Logo" style="padding-left: 50px;">
+            </a>
+            <nav class="menu">
+                <ul>
+                    <li><a href="{% url 'dashboard' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="{% url 'dashboard_users' %}" class="{% if request.path == '/dashboard/users/' %}active{% endif %}"><i class="fas fa-users"></i> Users</a></li>
+                    <li><a href="{% url 'dashboard_products' %}" class="{% if request.path == '/dashboard/products/' %}active{% endif %}"><i class="fas fa-box"></i> Products</a></li>
+                    <li><a href="{% url 'dashboard_orders' %}" class="{% if request.path == '/dashboard/orders/' %}active{% endif %}"><i class="fas fa-shopping-bag"></i> Orders</a></li>
+                    <li><a href="{% url 'dashboard_carts' %}" class="{% if request.path == '/dashboard/carts/' %}active{% endif %}"><i class="fa-solid fa-cart-shopping" style="color: #111212;"></i> Carts</a></li>
+                    <li><a href="{% url 'dashboard_payments' %}" class="{% if request.path == '/dashboard/payments/' %}active{% endif %}"><i class="fa-solid fa-credit-card" style="color: #0f0f10;"></i> Payments</a></li>
+                    <li><a href="{% url 'dashboard_wishlists' %}" class="{% if request.path == '/dashboard/wishlists/' %}active{% endif %}"><i class="fa-solid fa-heart" style="color: #0c0d0d;"></i> Wishlist</a></li>
+                    
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Header -->
+            <header class="header">
+                <!-- <input type="search" placeholder="Search..." /> --><br>
+                <div class="user-actions">
+                    <i class="fas fa-bell"></i>
+                    <!-- <span class="user-icon">{{ request.user.username }}</span> -->
+                    
+                    <span class="user-icon" onclick="toggleDropdown()" id="user-icon" style="padding-right: 5px;">
+                        {{ request.user.username|slice:":1"|upper }}{{ request.user.username|slice:"1:2"|upper }}
+                    </span>
+                    {{ request.user.username }}
+                    
+                    
+                    <div class="dropdown" id="dropdown-menu">
+                        <div class="day-mode" onclick="setMode('day')"><i class="fas fa-sun"></i>Day Mode</div>
+                        <div class="night-mode" onclick="setMode('night')"><i class="fas fa-moon"></i>Night Mode</div>
+                        <div class="pc-mode" onclick="setMode('pc')"><i class="fas fa-desktop"></i>PC Mode</div>
+                        <div class="logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i><form action="{% url 'logout' %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            Logout
+                        </form></div>
+                    </div>
+                </div>
+            </header>
+            {% block graph-chart %}{% endblock graph-chart %}
+            {% block user-content %}{% endblock user-content%}  
+            {% block edit_user %}{% endblock edit_user %}
+            {% block product_details %}{% endblock product_details %}
+            {% block add_products %}{% endblock add_products %}
+            {% block edit_products %}{% endblock edit_products %}
+            {% block carts %}{% endblock carts %}
+            {% block wishlist %}{% endblock wishlist %}
+            {% block order-content %}{% endblock order-content %}
+            {% block edit_order %}{% endblock edit_order %}
+            {% block payment-content %}{% endblock payment-content %}
+        </main>
+    </div>
+        
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+    <script>
+        const userIcon = document.getElementById('user-icon');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+    
+        function toggleDropdown() {
+            dropdownMenu.classList.toggle('active');
+        }
+    
+        function setMode(mode) {
+            let body = document.body;
+            if (mode === 'day') {
+                body.style.backgroundColor = '#ffffff';
+                body.style.color = '#000000';
+                alert('Day mode activated!');
+            } else if (mode === 'night') {
+                body.style.backgroundColor = '#2c2c2c';
+                body.style.color = '#ffffff';
+                alert('Night mode activated!');
+            } else if (mode === 'pc') {
+                body.style.backgroundColor = '#088178';
+                body.style.color = '#ffffff';
+                alert('PC mode activated!');
+            }
+        }
+    
+        // function logout() {
+        //     alert('You have been logged out!');
+        //     // Add your logout logic here
+        // }
+    
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+    </script>
+    
+</body>
+</html>

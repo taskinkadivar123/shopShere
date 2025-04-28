@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Search Results{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: #088178;">Search Results</h2>
+    
+    {% if product %}
+        <div class="row gy-4">
+            {% for prod in product %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm text-center p-3">
+                        <a href="{% url 'product-detail' prod.id %}" class="text-decoration-none text-dark">
+                            <img src="{{ prod.product_image.url }}" class="img-fluid mb-3" alt="{{ prod.title }}" style="height: 200px; object-fit: cover; border-radius: 10px;">
+                            <h5 class="fw-bold">{{ prod.title }}</h5>
+                            <p class="fw-bold text-danger mb-1">
+                                Rs. {{ prod.discounted_price }}/-
+                                <small class="text-muted text-decoration-line-through">Rs. {{ prod.selling_price }}</small>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-danger mt-5">No products found for your search.</p>
+    {% endif %}
+</div>
+{% endblock main-content %}

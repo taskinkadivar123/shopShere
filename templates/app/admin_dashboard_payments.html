@@ -1,0 +1,135 @@
+{% extends 'app/dashboard_static.html' %}
+{% load static %}
+{% block title %}Admin - Payments{% endblock %}
+
+{% block payment-content %}
+<div class="customer-container">
+    <div class="customer-header">
+        <h1 class="customer-title">All Payments</h1>
+        <form method="GET" class="search-form">
+            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search by username or order ID" class="search-input">
+            <button type="submit" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+            </button>
+        </form>
+    </div>
+
+    {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="customer-table-container">
+        <table class="customer-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Card (Last 4)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                    {% for order in payment.orders.all %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.user.username }}</td>
+                        <td>Rs. {{ payment.amount }}</td>
+                        <td>{{ payment.method }}</td>
+                        <td>
+                            {% if payment.status == 'Success' %}
+                                <span class="badge bg-success">Success</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ payment.date }}</td>
+                        <td>
+                            {% if payment.card_number %}
+                                **** **** **** {{ payment.card_number|slice:"-4:" }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{% url 'delete_payment' payment.id %}" method="post" onsubmit="return confirm('Are you sure you want to delete this payment?');">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn delete-btn">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% empty %}
+                    <tr>
+                        <td colspan="8">No payments found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+            
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if payments.has_previous %}
+                <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="pagination-arrow">&laquo; First</a>
+                <a href="?page={{ payments.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="pagination-arrow">Previous</a>
+            {% endif %}
+
+            <span class="page-numbers">
+                {% for num in payments.paginator.page_range %}
+                    {% if payments.number == num %}
+                        <span class="current-page">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            </span>
+
+            {% if payments.has_next %}
+                <a href="?page={{ payments.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="pagination-arrow">Next</a>
+                <a href="?page={{ payments.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="pagination-arrow">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+<style>
+    .action-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+    }
+
+    .delete-btn:hover {
+        background-color: #a71d2a;
+    }
+</style>
+{% endblock payment-content %}

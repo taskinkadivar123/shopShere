@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+
+{% block main-content %}
+<section id="page-header" class="about-header">
+    <h2>#KnowUs</h2>
+    <p>This website is used for your famous clothes</p>
+</section>
+
+<!-- About Head -->
+<section id="about-head" class="section-p1">
+   <img src="{% static 'app/images/about/about13.jpg' %}" alt="About Us Image">
+   <div>
+       <h2>Who We Are</h2>
+       <p>Shopping is an activity where customers browse goods and services, and sometimes purchase them. Take your visitors through a journey of your store's history, and share milestones and achievements that made your business stand out.</p>
+       <abbr title="Online shopping is a form of electronic commerce">Online shopping is a form of electronic commerce which allows consumers to buy goods directly from retailers.</abbr>
+        <br><br>
+        <marquee bgcolor="#ccc" loop="-1" scrollamount="5" width="100%">Online shopping is a form of electronic commerce which allows consumers to directly purchase goods.</marquee>   
+   </div>
+</section>
+
+<!-- App Video -->
+<section id="about-app" class="section-p1">
+   <h1>Download Our <a href="#">App</a></h1>
+   <div class="video">
+      <video autoplay muted loop src="{% static 'app/images/about/video3.mov' %}" alt="App Video"></video>
+   </div>
+</section>
+
+<!-- Features -->
+<section id="feature" class="section-p1">
+   <div class="fe-box">
+        <img src="{% static 'app/images/features/f1.PNG' %}" alt="Free Shipping" class="featureimg">
+        <h6>Free Shipping</h6>
+   </div>
+   <div class="fe-box">
+     <img src="{% static 'app/images/features/f2.PNG' %}" alt="Online Order" class="featureimg">
+     <h6>Online Order</h6>
+   </div>
+   <div class="fe-box">
+      <img src="{% static 'app/images/features/f3.PNG' %}" alt="Save Money" class="featureimg">
+      <h6>Save Money</h6>
+   </div>
+   <div class="fe-box">
+     <img src="{% static 'app/images/features/f4.PNG' %}" alt="Promotions" class="featureimg">
+     <h6>Promotions</h6>
+   </div>
+   <div class="fe-box">
+     <img src="{% static 'app/images/features/f5.PNG' %}" alt="Happy Sell" class="featureimg">
+     <h6>Happy Sell</h6>
+   </div>
+   <div class="fe-box">
+     <img src="{% static 'app/images/features/f6.PNG' %}" alt="24/7 Support" class="featureimg">
+     <h6>24/7 Support</h6>
+   </div>
+</section>
+{% endblock main-content %}

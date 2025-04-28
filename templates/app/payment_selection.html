@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+{% block main-content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4 w-100" style="max-width: 500px; border-radius: 15px;">
+        <h3 class="text-center mb-4" style="color: #088178;">Select Payment Method</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-check mb-3">
+                <input type="radio" name="payment_method" value="online" id="online" class="form-check-input" required>
+                <label for="online" class="form-check-label">Online Payment</label>
+            </div>
+            <div class="form-check mb-4">
+                <input type="radio" name="payment_method" value="cod" id="cod" class="form-check-input" required>
+                <label for="cod" class="form-check-label">Cash on Delivery</label>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn text-white fw-bold px-5" style="background-color: #088178; border: none;">
+                    Proceed
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

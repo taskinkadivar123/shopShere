@@ -1,0 +1,83 @@
+{% extends 'app/base.html' %}
+{% block title %}Order Confirmation{% endblock %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="text-center mb-4" style="color: #088178;">Order Confirmation</h2>
+        <p class="text-center">Thank you for your order!</p>
+
+        {% for order in orders %}
+        <div class="row mt-4 gy-4 border-top pt-4">
+            <div class="col-lg-6 col-md-12">
+                <h5 class="mb-1 text-teal">Order ID:</h5>
+                <p>{{ order.id }}</p>
+
+                <div class="text-center mb-3">
+                    <img src="{{ order.product.product_image.url }}" class="img-fluid rounded shadow-sm" style="max-width: 200px;" alt="{{ order.product.title }}">
+                </div>
+
+                <h5 class="mb-1 text-teal">Customer:</h5>
+                <p>{{ order.user.get_full_name }}</p>
+
+                <h5 class="mb-1 text-teal">Order Status:</h5>
+                <p>{{ order.status }}</p>
+
+                <h5 class="mb-1 text-teal">Product:</h5>
+                <p>{{ order.product.title }}</p>
+
+                <h5 class="mb-1 text-teal">Quantity:</h5>
+                <p>{{ order.quantity }}</p>
+
+                <h5 class="mb-1 text-teal">Order Date:</h5>
+                <p>{{ order.ordered_date }}</p>
+
+                <h5 class="mb-1 text-teal">Shipping Address:</h5>
+                {% if order.shipping_address %}
+                    <p>{{ order.shipping_address.name }}</p>
+                    <p>{{ order.shipping_address.locality }}</p>
+                    <p>{{ order.shipping_address.city }}, {{ order.shipping_address.state }} - {{ order.shipping_address.zipcode }}</p>
+                    <p>Mobile: {{ order.shipping_address.mobile }}</p>
+                {% else %}
+                    <p class="text-danger">No Shipping Address Provided</p>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <h5 class="mb-3 text-teal">Payment Details</h5>
+                {% if payment %}
+                    {% if payment.status == "Success" %}
+                        <p><strong>Status:</strong> <span class="text-success">Success</span></p>
+                        <p><strong>Amount Paid:</strong> Rs. {{ total }}</p>
+                        <p><strong>Method:</strong> Online Payment</p>
+                        <p><strong>Date:</strong> {{ payment.date }}</p>
+                    {% elif payment.status == "Pending" %}
+                        <p><strong>Status:</strong> <span class="text-warning">Pending</span></p>
+                        <p><strong>Method:</strong> Cash on Delivery</p>
+                        <p class="text-danger fw-semibold">Now you need to pay.</p>
+                        <p><strong>Total Due:</strong> Rs. {{ total }}</p>
+                    {% endif %}
+                {% else %}
+                    <p class="text-danger">Payment information not available.</p>
+                {% endif %}
+
+                <hr>
+                <h6><strong>Subtotal:</strong> Rs. {{ subtotal }}</h6>
+                <h6><strong>Shipping:</strong> Rs. {{ shipping }}</h6>
+                <h5 class="text-success"><strong>Total:</strong> Rs. {{ total }}</h5>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-5">
+            <a href="{% url 'home' %}" class="btn px-4 py-2 text-white fw-bold" style="background-color: #088178;">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-teal {
+        color: #088178;
+    }
+</style>
+{% endblock %}

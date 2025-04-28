@@ -1,0 +1,86 @@
+{% extends 'app/base.html' %}
+{% block title %}Image Search Result{% endblock %}
+
+{% block main-content %}
+<style>
+    .container {
+        max-width: 500px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .product-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 8px;
+    }
+
+    .product-price {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 12px;
+    }
+
+    .similarity {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 20px;
+    }
+
+    .view-button {
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 14px;
+        color: white;
+        background-color: #088178;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .view-button:hover {
+        background-color: #066d62;
+    }
+
+    .message {
+        font-size: 16px;
+        color: red;
+        background: #ffe6e6;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ffcccc;
+    }
+</style>
+
+<br><br>
+<div class="container">
+    {% if product %}
+        <h3>Best Matching Product</h3>
+        <img class="product-image" src="{{ product.product_image.url }}" alt="{{ product.name }}">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-price">Price: ₹{{ product.discounted_price }}</div>
+        <div class="similarity">Similarity Score: {{ similarity }}</div>
+        <a href="{% url 'product-detail' product.id %}" class="view-button">View</a>
+    {% elif message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+</div>
+{% endblock %}

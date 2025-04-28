@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main-content %}
+<h2>Payment Successful!</h2>
+
+<p>Order ID: {{ order.id }}</p>
+<p>Amount Paid: Rs. {{ payment.amount_paid }}</p>
+<p>Payment Status: {{ payment.payment_status }}</p>
+
+<a href="{% url 'order_confirmation' order.id %}">Go to Order Confirmation</a>
+{% endblock %}

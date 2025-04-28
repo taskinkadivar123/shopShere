@@ -1,0 +1,281 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block banner-slider %}
+<section id="hero">
+    <h4>Trade-in-offer</h4>
+    <h2>Super value deals</h2>
+    <h1>On all product</h1>
+    <p>Save more with coupons & up to 70% off! </p>
+    <a href="#product1">
+        <button>Shop Now</button>
+    </a>
+</section>
+{% endblock banner-slider %}
+
+
+{% block box-banner %}
+<section id="feature" class="section-p1">
+    <div class="fe-box">
+         <img src="{% static 'app/images/features/f1.png' %}" alt="" class="featureimg">
+         <h6>Free Shipping</h6>
+    </div>
+    <div class="fe-box">
+      <img src="{% static 'app/images/features/f2.png' %}" alt="" class="featureimg">
+      <h6>Online Order</h6>
+    </div>
+    <div class="fe-box">
+       <img src="{% static 'app/images/features/f3.png' %}" alt="" class="featureimg">
+       <h6>Save Money</h6>
+    </div>
+    <div class="fe-box">
+      <img src="{% static 'app/images/features/f4.png' %}" alt="" class="featureimg">
+      <h6>Promotions</h6>
+    </div>
+    <div class="fe-box">
+      <img src="{% static 'app/images/features/f5.png' %}" alt="" class="featureimg">
+      <h6>Happy Sell</h6>
+    </div>
+    <div class="fe-box">
+      <img src="{% static 'app/images/features/f6.png' %}" alt="" class="featureimg">
+      <h6>F24/7 Support</h6>
+    </div>
+</section>
+{% endblock box-banner %}
+
+<!-- {% block information %}
+<div class="container">
+    <div class="row bg-success text-center p-5 text-white border-bottom shadow">
+        <h1>Products</h1>
+        <small class="fs-5">
+            Dairy products are foods or beverages that are produced from the milk of mammals, primarily cows, but also goats, sheep, and other animals. 
+            These products are rich in nutrients, particularly calcium, protein, and vitamins like B12, making them important components of many diets around the world.    
+        </small>
+    </div>
+</div>
+{% endblock information %} -->
+
+<!-- {% block product-details %}
+<section id="product1" class="section-p1">
+    <h2>Featured Product</h2>
+    <p>Summer Collection New Morden Design</p>
+    <div class="pro-container">
+        <div class="pro">
+            <a href="{% url 'category' 'GH' %}">
+            <img src="{% static 'app/images/product/buffalo-ghee.png' %}" alt="">
+            <div class="des">
+                <span>adidas</span>
+                <h5>Cartoon Astronaunt T-Shirts</h5>
+                <div class="star">
+                    <img src="img/star.png" alt="">
+                    <img src="img/star.png" alt="">
+                    <img src="img/star.png" alt="">
+                    <img src="img/star.png" alt="">
+                    <img src="img/star.png" alt="">
+                </div>
+                <h4>Rs.350</h4>
+            </div>
+            </a>
+          <a href="#"><div class="shopicon"><img src="img/troli.PNG" alt="" ></div></a>
+      </div>
+    </div>
+{% endblock product-details%} -->
+
+{% block main-content %}
+    <div class="container">
+        <h2 class="text-center">Feature Products</h2>
+        <p style="text-align: center; font-size: 18px; color: #555; font-weight: 400;">Summer Collection New Morden Design</p>
+        <br><br>
+        <div class="row container">
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'MC' %}">
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/n6.jpg' %}" class="img-responsive  center-block" alt="">
+                            <p class="mlkpro">Men's Clothes</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'WC' %}">
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/p4.jpg' %}" class="img-responsive  center-block" alt="">
+                            <p class="mlkpro">Women's Clothes</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'KC' %}" >
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/p6.webp' %}" class="img-responsive center-block" alt="">
+                            <p class="mlkpro">Kid's Clothes</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="row container">
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'JW' %}" >
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/j4.webp' %}" class="img-responsive  center-block" alt="">
+                            <p class="mlkpro">Jewelry</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'SH' %}" >
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/s4.webp' %}" class="img-responsive  center-block" alt="">
+                            <p class="mlkpro">Shoes/Slipers</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+            <div class="colo-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+                <div class="goodnesssec buttermilk smbg">
+                    <a href="{% url 'category' 'BG' %}" >
+                        <div class="goodnessseccont text-center">
+                            <img src="{% static 'app/images/products/b2.jpg' %}" class="img-responsive center-block" alt="">
+                            <p class="mlkpro">Bags</p>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <br/><br/>
+{% endblock main-content %}
+
+{% block banner-center %}
+<section id="banner" class="section-m1">
+    <h4>Repair Services</h4>
+    <h2>Up to <span>70% Off</span> - All t-Shirt & Accessories</h2>
+    <a href="{% url 'about' %}">
+        <button class="normal">Explore More</button>
+    </a>
+</section>
+{% endblock banner-center %}
+
+
+
+
+
+{% block product-add %}
+<section id="product1" class="section-p1">
+    <h2>New Arrivals</h2>
+    <p>Summer Collection New Modern Design</p>
+    <div class="pro-container">
+        {% for product in new_arrivals %}
+        <div class="pro">
+
+            <!-- Product image and title (link to product detail) -->
+            <a href="{% url 'product-detail' product.id %}" style="text-decoration: none; color: inherit;">
+                <img src="{{ product.product_image.url }}" alt="{{ product.title }}">
+                <div class="des">
+                    <h5>{{ product.title }}</h5>
+                    <h4>Rs.{{ product.selling_price }}</h4>
+                </div>
+            </a>
+
+            <!-- Cart icon as form to add to cart -->
+            <form action="{% url 'add-to-cart' %}" method="GET" class="d-inline">
+                <input type="hidden" name="prod_id" value="{{ product.id }}"/>
+                <button type="submit" class="shopicon" style="border: none; background: none; cursor: pointer;">
+                    <i class="fa-solid fa-cart-shopping" style="color: #b0b0b0;"></i>
+                </button>
+            </form>
+
+        </div>
+        {% empty %}
+        <p>No new arrivals at the moment.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock product-add %}
+
+
+
+{% block five-banner %}
+<!--Two small banner-->
+<section id="sm-banner" class="section-p1">
+    <div class="banner-box">
+         <h4>crazy deals</h4>
+         <h2>buy 1 get 1 free</h2>
+         <span>The best classic dress is on sale at care</span>
+         <a href="{% url 'about' %}">
+             <button class="white">Learn More</button>
+         </a>
+    </div>
+    
+    <div class="banner-box banner-box2">
+         <h4>spring/summer</h4>
+         <h2>upcoming season</h2>
+         <span>The best classic dress is on sale at care</span>
+         <a href="#product1">
+             <button class="white">Collection</button>
+         </a>
+    </div>
+</section>
+  
+ <!--Three small banner-->
+ <section id="banner3">
+    <div class="banner-box">
+      <h2>SEASONAL SALE</h2>
+      <h3>Winter Collection -50% OFF</h3> 
+    </div>
+    <div class="banner-box banner-box2">
+      <h2>NEW FOOTWEAR COLLECTION</h2>
+      <h3>Spring/Summer 2023</h3> 
+    </div>
+    <div class="banner-box banner-box3">
+      <h2>T-SHIRTS</h2>
+      <h3>New Trendy Prints</h3> 
+    </div>
+ </section>
+ 
+{% endblock five-banner %}
+
+{% block newsletters %}
+<section id="newsletter" class="section-p1 section-m1">
+    <div class="newstext">
+        <h4>Sign Up For newsletters</h4>
+        <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+    </div>
+    <div class="form">
+       <input type="text" placeholder="Your E-mail Address">
+       <button class="normal">Sign Up</button>
+    </div>
+</section>
+<script>
+    function showThankYou() {
+        const email = document.getElementById('emailInput').value;
+        const message = document.getElementById('thankYouMessage');
+
+        if (email.trim() !== '') {
+            message.innerText = `Thank you for signing up, ${email}!`;
+            message.style.display = 'block';
+        } else {
+            message.innerText = 'Please enter a valid email.';
+            message.style.display = 'block';
+        }
+    }
+</script>
+{% endblock newsletters %}

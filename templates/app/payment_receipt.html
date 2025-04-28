@@ -1,0 +1,52 @@
+{% extends 'app/base.html' %}
+{% block title %}Payment Receipt{% endblock %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="card shadow-lg p-4" style="border-radius: 15px;">
+        <h2 class="text-center" style="color: #088178;">Payment Receipt</h2>
+        <hr>
+        <p class="text-center">Your payment has been processed successfully.</p>
+
+        <div class="row mt-4">
+            <!-- Orders Summary -->
+            <div class="col-md-6 mb-4">
+                <h5 class="text-dark">Order(s) Summary</h5>
+                {% for order in orders %}
+                    <div class="border rounded p-3 mb-3 shadow-sm">
+                        <p><strong>Order ID:</strong> {{ order.id }}</p>
+                        <p><strong>Product:</strong> {{ order.product.title }}</p>
+                        <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                        <p><strong>Price (each):</strong> Rs. {{ order.product.discounted_price }}</p>
+                        <p><strong>Total:</strong> Rs. {{ order.total_cost|floatformat:2 }}</p>
+
+                        <div class="text-center mt-2">
+                            <img src="{{ order.product.product_image.url }}" class="img-fluid rounded shadow-sm" alt="{{ order.product.title }}" style="max-width: 120px;">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Payment Details -->
+            <div class="col-md-6">
+                <h5 class="text-dark">Payment Details</h5>
+                <p><strong>Status:</strong> {{ payment.status }}</p>
+                <p><strong>Method:</strong> {{ payment.method }}</p>
+                <p><strong>Date:</strong> {{ payment.date }}</p>
+
+                <hr>
+                <p><strong>Subtotal:</strong> Rs. {{ subtotal }}</p>
+                <p><strong>Shipping:</strong> Rs. {{ shipping }}</p>
+                <p><strong>Total Paid:</strong> <span class="fw-bold text-success">Rs. {{ total }}</span></p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'order_confirmation' payment.id %}" class="btn text-white fw-bold px-4" style="background-color: #088178;">
+                Go to Order Confirmation
+            </a>
+            <a href="{% url 'download_receipt' payment.id %}" class="btn btn-outline-success fw-bold px-4">Download Receipt</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

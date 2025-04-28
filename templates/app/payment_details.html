@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block nain-content %}
+<h2>Payment Details</h2>
+
+<p>Order ID: {{ order.id }}</p>
+<p>Amount Paid: Rs. {{ payment.amount_paid }}</p>
+<p>Payment Status: {{ payment.payment_status }}</p>
+
+{% if payment.payment_status == "Pending" %}
+    <p><strong>Now you need to pay.</strong></p>
+{% endif %}
+
+{% endblock %}

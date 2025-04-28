@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% block title %}Order Confirmation{% endblock %}
+
+{% block main-content %}
+
+    <style>
+        
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .error {
+            color: red;
+            background: #ffe6e6;
+            border: 1px solid #ffcccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background: #088178;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background:#03746c;
+        }
+    </style>
+</head>
+<body>
+    <br><br>
+    <div class="container">
+        <h3>Search Similar Products by Image</h3>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="image" accept="image/*" required><br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+{% endblock main-content %}

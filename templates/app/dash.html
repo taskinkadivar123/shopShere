@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* General Body and Layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            height: 100%;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #444;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #55c57a;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .user-info {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Dashboard and Section Styles */
+        .dashboard {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'dashboard_users' %}">Users</a>
+        <a href="{% url 'dashboard_products' %}">Products</a>
+        <a href="{% url 'dashboard_carts' %}">Carts</a>
+        <a href="{% url 'dashboard_payments' %}">Payments</a>
+        <a href="{% url 'dashboard_wishlists' %}">Wishlist</a>
+        <a href="{% url 'dashboard_orders' %}">Orders</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <div class="user-info">
+                Welcome, {{ user.username }} <!-- Displays the logged-in user's name -->
+            </div>
+        </div>
+        <br><br>
+        <!-- Dashboard Content -->
+        <div class="dashboard">
+            <div class="section">
+                <h2>Users</h2>
+                <table>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Products</h2>
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                    </tr>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.title }}</td>
+                        <td>{{ product.selling_price }}</td>
+                        <td>{{ product.get_category_display }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Carts</h2>
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                    </tr>
+                    {% for cart in carts %}
+                    <tr>
+                        <td>{{ cart.user.username }}</td>
+                        <td>{{ cart.product.title }}</td>
+                        <td>{{ cart.quantity }}</td>
+                        <td>{{ cart.total_cost }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Payments</h2>
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.user.username }}</td>
+                        <td>{{ payment.amount }}</td>
+                        <td>{{ payment.razorpay_payment_status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Wishlist</h2>
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Product</th>
+                    </tr>
+                    {% for wishlist in wishlists %}
+                    <tr>
+                        <td>{{ wishlist.user.username }}</td>
+                        <td>{{ wishlist.product.title }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Orders</h2>
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.user.username }}</td>
+                        <td>{{ order.product.title }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.total_cost }}</td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
